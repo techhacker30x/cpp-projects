@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include <mysql.h>
+#include <mysql/mysql.h>
 #include <sstream>
 
 using namespace std;
@@ -46,7 +46,7 @@ public:
     DBManager() {
         conn = mysql_init(0);
         // 1. Connect to Local XAMPP MySQL
-        if (mysql_real_connect(conn, "localhost", "root", "", NULL, 3306, NULL, 0)) {
+        if (mysql_real_connect(conn, "localhost", "root", "kali", NULL, 3306, NULL, 0)) {
             
             // 2. Auto-Create Database and Tables
             mysql_query(conn, "CREATE DATABASE IF NOT EXISTS school_db");
