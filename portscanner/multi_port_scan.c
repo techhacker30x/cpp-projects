@@ -20,7 +20,7 @@ int scan_port(const char *ip, int port){
 	}
 
 	/* Set timeout */
-	timeout.tv_sec = 2;
+	timeout.tv_sec = TIMEOUT;
 	timeout.tv_usec = 0;
 	setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
 	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
