@@ -7,10 +7,11 @@
 
 struct Customer {
     char name[100];
+    int ID;
 };
 
 struct Room {
-    int roomNo, durationHr, persons;
+    int roomNo, durationHr, guest;
     double payment, balance;
     struct Customer cust[MAXPERSONS];
     int isBooked; // 0 for empty, 1 for booked
@@ -24,22 +25,24 @@ void regCustomer(struct Room* room) {
     printf("[] Duration (Hours): ");
     scanf("%d", &room->durationHr);
 
-    printf("[] Persons in Room [max %d]: ", MAXPERSONS);
-    scanf("%d", &room->persons);
+    printf("[] Guest in Room [max %d]: ", MAXPERSONS);
+    scanf("%d", &room->guest);
 
-    if (room->persons > MAXPERSONS || room->persons <= 0) {
-        printf("Invalid number of persons!\n");
+    if (room->guest > MAXPERSONS || room->guest <= 0) {
+        printf("Invalid number of Guests!\n");
         return;
     }
 
-    for (int i = 0; i < room->persons; i++) {
-        printf("  [+] Name for Person %d: ", i + 1);
+    for (int i = 0; i < room->guest; i++) {
+        printf("  [+] Name for Guest %d: ", i + 1);
         getchar(); // Clear buffer
         fgets(room->cust[i].name, sizeof(room->cust[i].name), stdin);
         room->cust[i].name[strcspn(room->cust[i].name, "\n")] = 0;
+        printf("  [+] Id for Guest %d: ", i  + 1);
+        scanf("%d", &room->cust[i].ID);
     }
 
-    cost = room->persons * (100.0 * room->durationHr);
+    cost = room->guest * (100.0 * room->durationHr);
     printf("[] Total Cost: %.2lf. Enter Payment: ", cost);
     scanf("%lf", &room->payment);
 
@@ -55,10 +58,11 @@ void showBookedRooms(struct Room rooms[], int size) {
     for (int i = 0; i < size; i++) {
         if (rooms[i].isBooked) {
             found = 1;
-            printf("Room No: %d | Persons: %d | Balance: %.2f\n", 
-                    rooms[i].roomNo, rooms[i].persons, rooms[i].balance);
-            for(int j = 0; j < rooms[i].persons; j++) {
+            printf("Room No: %d | Guestss: %d | Balance: %.2f\n", 
+                    rooms[i].roomNo, rooms[i].guest, rooms[i].balance);
+            for(int j = 0; j < rooms[i].guest; j++) {
                 printf("  - %s\n", rooms[i].cust[j].name);
+                printf("  -%d\n", rooms[i].cust[j].ID);
             }
             printf("------------------------------------------------\n");
         }
